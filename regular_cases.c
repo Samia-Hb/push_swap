@@ -5,78 +5,96 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: shebaz <shebaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/02 13:18:40 by shebaz            #+#    #+#             */
-/*   Updated: 2024/04/03 12:28:55 by shebaz           ###   ########.fr       */
+/*   Created: 2024/04/18 10:33:05 by shebaz            #+#    #+#             */
+/*   Updated: 2024/04/23 21:25:16 by shebaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void the_rest_of_case(Stack **stackA,int j)
+int	nbr_of_arguments(int argc, char **argv)
 {
-    if(j == 1)
-    {
-        sa(*stackA);
-        printf("sa\n");
-    }
-    else
-    {
-        rra(stackA);
-        printf("rra\n");
-    }
+	int	i;
+	int	count;
+
+	i = 1;
+	count = 0;
+	while (i < argc)
+	{
+		count += ft_counter(argv[i], ' ');
+		i++;
+	}
+	return (count);
 }
 
-void sort_three_element(Stack **stackA)//done
+void	push_to_stackb(t_stack **stackA, t_stack **stackB)
 {
-    Stack *courant;
-    Stack *last;
-    Stack *tmp;
-
-    last = *stackA;
-    tmp = (*stackA)->next;
-    courant = *stackA;
-    while (last->next != NULL)
-            last = last->next;
-    while (!isStackSorted(*stackA,0))
-    {
-        if (courant->data > last->data)
-            the_rest_of_case(stackA,0);
-        else if (courant -> data > tmp->data)
-            the_rest_of_case(stackA,1);
-        else if (tmp->data > last->data)
-            the_rest_of_case(stackA,0);
-        courant = *stackA;
-        last = *stackA;
-        while (last->next != NULL)
-            last = last->next;
-        tmp = (*stackA)->next;
-    }
+	while (ft_lstsize(*stackA) != 0)
+	{
+		execute_print_move(stackA, stackB, "pb\n");
+	}
 }
 
-void sort_five_element(Stack **stackA, Stack **stackB)//done
-{    
-    int i;
-    int min_element;
+void	the_rest_of_case(t_stack **stackA, int j)
+{
+	if (j == 1)
+	{
+		sa(*stackA);
+		ft_printf("sa\n");
+	}
+	else
+	{
+		rra(stackA);
+		ft_printf("rra\n");
+	}
+}
 
-    i = 0;
-    while (i++ < 2)
-    {
-        min_element = Min_element(*stackA);
-        while (pos(*stackA, min_element) != 0)
-        {
-            if(pos(*stackA, min_element) <= ft_lstsize(*stackA) / 2)
-            {
-                ra(stackA);
-                printf("ra\n");
-            }
-            else
-            {
-                rra(stackA);
-                printf("rra\n");
-            }
-        }
-        pb(stackA, stackB);
-        printf("pb\n");
-    }
-    sort_three_element(stackA);
+void	sort_three_element(t_stack **stackA)
+{
+	t_stack	*courant;
+	t_stack	*last;
+	t_stack	*tmp;
+
+	last = *stackA;
+	tmp = (*stackA)->next;
+	courant = *stackA;
+	while (last->next != NULL)
+		last = last->next;
+	while (!is_stack_sorted(*stackA, 0))
+	{
+		if (courant->data > last->data)
+			the_rest_of_case(stackA, 0);
+		else if (courant -> data > tmp->data)
+			the_rest_of_case(stackA, 1);
+		else if (tmp->data > last->data)
+			the_rest_of_case(stackA, 0);
+		courant = *stackA;
+		last = *stackA;
+		while (last->next != NULL)
+			last = last->next;
+		tmp = (*stackA)->next;
+	}
+}
+
+void	sort_five_element(t_stack **stackA, t_stack **stackB)
+{
+	int	i;
+	int	min;
+
+	i = 0;
+	while (i++ < 2)
+	{
+		min = min_element(*stackA);
+		while (pos(*stackA, min) != 0)
+		{
+			if (pos(*stackA, min) <= ft_lstsize(*stackA) / 2)
+				execute_print_move(stackA, stackB, "ra\n");
+			else
+				execute_print_move(stackA, stackB, "rra\n");
+		}
+		execute_print_move(stackA, stackB, "pb\n");
+	}
+	sort_three_element(stackA);
+	execute_print_move(stackA, stackB, "pa\n");
+	execute_print_move(stackA, stackB, "pa\n");
 }

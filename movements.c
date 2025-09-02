@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   moves.c                                            :+:      :+:    :+:   */
+/*   movements.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shebaz <shebaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/29 14:37:35 by shebaz            #+#    #+#             */
-/*   Updated: 2024/03/29 15:34:07 by shebaz           ###   ########.fr       */
+/*   Created: 2024/04/18 11:02:57 by shebaz            #+#    #+#             */
+/*   Updated: 2024/04/28 00:15:52 by shebaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sa(Stack *stackA)//it works
+void	sa(t_stack *stackA)
 {
 	int		tmp;
-	Stack		*courant;
+	t_stack	*courant;
 
 	courant = stackA->next;
 	tmp = stackA->data;
@@ -23,10 +23,10 @@ void	sa(Stack *stackA)//it works
 	courant->data = tmp;
 }
 
-void	sb(Stack *stackB)//it works
+void	sb(t_stack *stackB)
 {
-	int	tmp;
-	Stack	*courant;
+	int		tmp;
+	t_stack	*courant;
 
 	courant = stackB->next;
 	tmp = stackB->data;
@@ -34,9 +34,9 @@ void	sb(Stack *stackB)//it works
 	courant->data = tmp;
 }
 
-void	pa(Stack **stackA, Stack **stackB)//it works
+void	pa(t_stack **stackA, t_stack **stackB)
 {
-	Stack	*courant;
+	t_stack	*courant;
 
 	if (ft_lstsize(*stackB) > 0)
 	{
@@ -46,9 +46,9 @@ void	pa(Stack **stackA, Stack **stackB)//it works
 	}
 }
 
-void	pb(Stack **stackA, Stack **stackB)//it works
+void	pb(t_stack **stackA, t_stack **stackB)
 {
-	Stack	*courant;
+	t_stack	*courant;
 
 	if (ft_lstsize(*stackA) > 0)
 	{
@@ -58,9 +58,9 @@ void	pb(Stack **stackA, Stack **stackB)//it works
 	}
 }
 
-void	ra(Stack **stackA)//it works
+void	ra(t_stack **stackA)
 {
-	Stack	*last;
+	t_stack	*last;
 
 	if (*stackA == NULL || (*stackA)->next == NULL)
 		return ;
@@ -70,52 +70,4 @@ void	ra(Stack **stackA)//it works
 	last->next = *stackA;
 	*stackA = (*stackA)->next;
 	last->next->next = NULL;
-}
-
-void	rb(Stack **stackB)//it works
-{
-	Stack	*last;
-
-	if (*stackB == NULL || (*stackB)->next == NULL)
-		return ;
-	last = *stackB;
-	while (last->next != NULL)
-		last = last->next;
-	last->next = *stackB;
-	*stackB = (*stackB)-> next;
-	last->next->next = NULL;
-}
-
-void	rra(Stack **stackA)//it works
-{
-	Stack	*last;
-	Stack	*new_end;
-
-	last = *stackA;
-	new_end = NULL;
-	while (last ->next != NULL)
-	{
-		new_end = last;
-		last = last->next;
-	}
-	last -> next = *stackA;
-	*stackA = last;
-	new_end ->next = NULL;
-}
-
-void	rrb(Stack **stackB)//it works
-{
-	Stack	*last;
-	Stack	*new_end;
-
-	last = *stackB;
-	new_end = NULL;
-	while (last->next != NULL)
-	{
-		new_end = last;
-		last = last->next;
-	}
-	last -> next = *stackB;
-	*stackB = last;
-	new_end ->next = NULL;
 }

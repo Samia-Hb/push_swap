@@ -5,49 +5,49 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: shebaz <shebaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/02 13:03:38 by shebaz            #+#    #+#             */
-/*   Updated: 2024/04/02 13:03:40 by shebaz           ###   ########.fr       */
+/*   Created: 2024/04/18 11:03:06 by shebaz            #+#    #+#             */
+/*   Updated: 2024/04/28 15:43:08 by shebaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void push(Stack **stackA, int data)//done
+int	pos(t_stack *stack, int element)
 {
-    Stack *node;
+	t_stack	*courant;
+	int		i;
 
-    node = malloc(sizeof(Stack));
-    if(!node)
-    {
-        printf("Allocation Failure");
-        return ;
-    }
-    node -> data = data;
-    node -> next = *stackA;
-    *stackA = node;
+	courant = stack;
+	i = 0;
+	while (courant)
+	{
+		if (courant->data == element)
+			return (i);
+		i++;
+		courant = courant-> next;
+	}
+	free(courant);
+	return (-1);
 }
 
-void push2(Stack *node, Stack **dest)//done
+int	min_element(t_stack *stackA)
 {
-    node->next = *dest;
-    *dest = node;
+	int	min_element;
+
+	min_element = INT_MAX;
+	while (stackA)
+	{
+		if (stackA->data < min_element)
+			min_element = stackA->data;
+		stackA = stackA -> next;
+	}
+	return (min_element);
 }
 
-Stack *pop(Stack **stack_s)//done
-{
-    Stack *tmp;
-
-    tmp = *stack_s;
-    Stack *courant = (*stack_s) -> next;
-    tmp -> data = (*stack_s) -> data;
-    *stack_s = courant;
-    return (tmp);
-}
-
-int	ft_lstsize(Stack *lst) //done
+int	ft_lstsize(t_stack *lst)
 {
 	int		i;
-	Stack	*courant;
+	t_stack	*courant;
 
 	i = 0;
 	courant = lst;
@@ -59,21 +59,18 @@ int	ft_lstsize(Stack *lst) //done
 	return (i);
 }
 
-int isStackSorted(Stack *s,int element)//done
+int	find_max_elememt(t_stack *stackB)
 {
-    Stack *courant;
-    Stack *courant1;
+	int		max_element;
+	t_stack	*courant;
 
-    courant = s;
-    courant1 = s->next;
-    while (courant1 != NULL)
-    {
-        if (element == 1 && courant->data < courant1->data)
-            return (0);
-        else if(element == 0 && courant->data > courant1->data)
-            return (0);
-        courant = courant->next;
-        courant1 = courant1->next;
-    }
-    return 1;
+	max_element = INT_MIN;
+	courant = stackB;
+	while (courant)
+	{
+		if (courant->data > max_element)
+			max_element = courant->data;
+		courant = courant->next;
+	}
+	return (max_element);
 }

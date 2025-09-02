@@ -1,11 +1,17 @@
-#include "push_swap.h"
-int ft_strlen(const char *str)
-{
-    int i = 0;
-    while(str[i])
-        i++;
-    return i;
-}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: shebaz <shebaz@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/19 14:40:31 by shebaz            #+#    #+#             */
+/*   Updated: 2024/04/19 14:40:33 by shebaz           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_bonus.h"
+
 static int	count_len(char const *s, char c, int *i)
 {
 	int	count;
@@ -106,7 +112,7 @@ char	**ft_split(char const *s, char c)
 
 	if (s == NULL)
 		return (NULL);
-	if(ft_strlen(s) == 0)
+	if (ft_strlen(s) == 0)
 	{
 		strings = malloc(1 * sizeof(char *));
 		if (!strings)

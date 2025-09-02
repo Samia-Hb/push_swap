@@ -1,65 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shebaz <shebaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 11:02:49 by shebaz            #+#    #+#             */
-/*   Updated: 2024/05/05 13:44:11 by shebaz           ###   ########.fr       */
+/*   Created: 2024/04/19 15:29:58 by shebaz            #+#    #+#             */
+/*   Updated: 2024/05/07 21:59:41 by shebaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_bonus.h"
 
-void	push(t_stack **stackA, int data)
+int	nbr_of_arguments(int argc, char **argv)//done
 {
-	t_stack	*node;
+	int	i;
+	int	count;
 
-	node = malloc(sizeof(t_stack));
-	if (!node)
+	i = 1;
+	count = 0;
+	while (i < argc)
 	{
-		ft_printf("Allocation Failure");
-		return ;
+		count += ft_counter(argv[i], ' ');
+		i++;
 	}
-	node -> data = data;
-	node -> next = *stackA;
-	*stackA = node;
+	return (count);
 }
 
-t_stack	*pop(t_stack **stack_s)
+void	check_input(char *str, t_stack **stack_a, t_stack **stack_b, long *arr)
 {
-	t_stack	*tmp;
-	t_stack	*courant;
-
-	tmp = *stack_s;
-	courant = (*stack_s)-> next;
-	tmp -> data = (*stack_s)-> data;
-	*stack_s = courant;
-	return (tmp);
-}
-
-void	sort_stacka(t_stack **stackA)
-{
-	int	min;
-
-	min = min_element(*stackA);
-	while (pos(*stackA, min) != 0)
+	if (str[0] == '\n')
 	{
-		if (pos(*stackA, min) <= ft_lstsize(*stackA) / 2)
-		{
-			ra(stackA);
-			ft_printf("ra\n");
-		}
-		else if (pos(*stackA, min) > ft_lstsize(*stackA) / 2)
-		{
-			rra(stackA);
-			ft_printf("rra\n");
-		}
+		clean_stack(*stack_a);
+		clean_stack(*stack_b);
+		write(2, "Error\n", 6);
+		free(arr);
+		free(str);
+		exit(1);
 	}
+	check_mov(stack_a, stack_b, str);
+	free(str);
 }
 
-void	fill_the_stack(int argc, char **argv, t_stack **stackA)
+void	fill_the_stack(int argc, char **argv, t_stack **stackA)//done
 {
 	long	*arr;
 	int		size;
@@ -72,6 +55,23 @@ void	fill_the_stack(int argc, char **argv, t_stack **stackA)
 		size--;
 	}
 	free(arr);
+}
+
+void	second_half_main(t_stack **stack_a, t_stack **stack_b, long *arr)
+{
+	char	*str;
+
+	while (1)
+	{
+		str = get_next_line(0);
+		if (str == NULL)
+			break ;
+		check_input(str, stack_a, stack_b, arr);
+	}
+	if (is_stack_sorted(*stack_a, 0) && *stack_b == NULL)
+		write(1, "OK\n", 3);
+	else
+		write(1, "KO\n", 3);
 }
 
 int	main(int argc, char **argv)
@@ -95,7 +95,7 @@ int	main(int argc, char **argv)
 		clean_stack(stack_a);
 		return (free(arr), 0);
 	}
-	algo_functions(&stack_a, &stack_b);
+	second_half_main(&stack_a, &stack_b, arr);
 	free(arr);
 	clean_stack(stack_a);
 	if (ft_lstsize(stack_b) != 0)
